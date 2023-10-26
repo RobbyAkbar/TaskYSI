@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TaskYSI.Application.Commands;
+using TaskYSI.Application.Commands.InsertCourse;
+using TaskYSI.Application.Queries.GetCourseItemsWithPagination;
+using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.Course;
 
 namespace TaskYSI.WebAPI.Controllers;
@@ -38,17 +40,19 @@ public class CourseController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<List<GetAllCourseResponse>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<PaginatedList<CourseResponse>>> GetCourseItemsWithPagination([FromQuery] GetCourseItemsWithPaginationQuery query, CancellationToken cancellationToken)
     {
         try
         {
-            _logger.LogInformation("GetAll Course API Calling in Controller...");
-            var response = await _mediator.Send(new GetAllCourseCommand(), cancellationToken);
+            _logger.LogInformation($"Get Course API Calling in Controller: PageNumber {query.PageNumber}, PageSize {query.PageSize}");
+
+            // Mengirim permintaan dengan parameter paginasi ke mediator
+            var response = await _mediator.Send(query, cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("GetAll Course API Error Occur: Message {@Message}", ex.Message);
+            _logger.LogError("Get Course API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }

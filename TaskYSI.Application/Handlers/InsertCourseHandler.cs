@@ -1,6 +1,6 @@
 using AutoMapper;
 using MediatR;
-using TaskYSI.Application.Commands;
+using TaskYSI.Application.Commands.InsertCourse;
 using TaskYSI.Domain.Models.Course;
 using TaskYSI.Infrastructure.Context;
 

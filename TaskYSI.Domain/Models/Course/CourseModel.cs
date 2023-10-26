@@ -1,10 +1,10 @@
+using TaskYSI.Domain.Models.Category;
+
 namespace TaskYSI.Domain.Models.Course;
 
-public class CourseModel
+public class CourseModel: BaseEntity
 {
-    public Guid Id { get; set; }
     public required string CourseName { get; set; }
     public required string Description { get; set; }
-    public DateTimeOffset DateCreated { get; set; } = DateTimeOffset.Now;
-    public DateTimeOffset? DateUpdated { get; set; }
+    public required ICollection<CategoryModel> Categories { get; set; }
 }

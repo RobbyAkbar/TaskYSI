@@ -1,5 +1,5 @@
 using AutoMapper;
-using TaskYSI.Application.Commands;
+using TaskYSI.Application.Commands.InsertCourse;
 using TaskYSI.Domain.Models.Course;
 
 namespace TaskYSI.Application.Mapper;

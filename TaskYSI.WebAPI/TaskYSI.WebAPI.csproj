@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MediatR" Version="12.1.1" />
+        <PackageReference Include="MediatR" Version="12.1.1"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.12"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TaskYSI.Application\TaskYSI.Application.csproj" />
-      <ProjectReference Include="..\TaskYSI.Domain\TaskYSI.Domain.csproj" />
+        <ProjectReference Include="..\TaskYSI.Application\TaskYSI.Application.csproj"/>
+        <ProjectReference Include="..\TaskYSI.Domain\TaskYSI.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

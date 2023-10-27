@@ -2,9 +2,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskYSI.Application.Commands.InsertUser;
 using TaskYSI.Application.Commands.InsertUserRole;
-using TaskYSI.Application.Queries.GetUser;
-using TaskYSI.Application.Queries.GetUserRole;
-using TaskYSI.Application.Queries.GetUsersWithPagination;
+using TaskYSI.Application.Queries.User;
+using TaskYSI.Application.Queries.UserRole;
 using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.User;
 using TaskYSI.Domain.Models.UserRole;
@@ -117,6 +116,24 @@ public class UserController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError("Get User by Email API Error Occurred: Message {@Message}", ex.Message);
+            return BadRequest(new { IsSuccess = false, ex.Message });
+        }
+    }
+
+    [Route("VerifiedEmail")]
+    [HttpGet]
+    public async Task<ActionResult<UserResponse>> VerifiedUserEmail([FromQuery] VerifiedUserEmailQuery query,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogInformation("Verified Email API Calling in Controller...");
+            var response = await _mediator.Send(query, cancellationToken);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Verified Email API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }

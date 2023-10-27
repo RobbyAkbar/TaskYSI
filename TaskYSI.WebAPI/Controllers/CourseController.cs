@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskYSI.Application.Commands.InsertCourse;
-using TaskYSI.Application.Queries.GetCourseItemsWithPagination;
+using TaskYSI.Application.Queries.Course;
 using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.Course;
 

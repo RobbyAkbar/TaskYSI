@@ -1,8 +1,8 @@
 using AutoMapper;
+using AutoWrapper.Wrappers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TaskYSI.Application.Exceptions;
-using TaskYSI.Application.Queries.GetUser;
+using TaskYSI.Application.Queries.User;
 using TaskYSI.Domain.Models.User;
 using TaskYSI.Infrastructure.Context;
 
@@ -22,11 +22,12 @@ public class GetUserByEmailQueryHandler: IRequestHandler<GetUserByEmailQuery, Us
     public async Task<UserResponse> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
     {
         var userEntity = await _context.Users
+            .Include(u => u.Role)
             .FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
 
         if (userEntity is null)
         {
-            throw new NotFoundException("User not found for the provided email address.");
+            throw new ApiException("User not found for the provided email address.");
         }
 
         var userResponse = _mapper.Map<UserResponse>(userEntity);

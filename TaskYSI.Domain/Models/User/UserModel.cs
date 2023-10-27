@@ -9,4 +9,5 @@ public class UserModel: BaseEntity
     public bool IsVerified { get; set; }
     public required UserRoleModel Role { get; set; }
     public required int RoleId { get; set; }
+    public required UserCourseModel UserCourse { get; set; }
 }

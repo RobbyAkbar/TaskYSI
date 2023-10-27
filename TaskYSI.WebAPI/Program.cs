@@ -1,7 +1,16 @@
+using AutoWrapper;
+using Serilog;
 using TaskYSI.Application;
 using TaskYSI.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Setup Serilog
+/*Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Host.UseSerilog(Log.Logger);*/
 
 // Add services to the container.
 
@@ -22,10 +31,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseErrorHandler();
-
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+// Setup AutoWrapper
+app.UseApiResponseAndExceptionWrapper();
 
 app.Run();

@@ -2,7 +2,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using TaskYSI.Application.Mapper;
-using TaskYSI.Application.Queries.GetUsersWithPagination;
+using TaskYSI.Application.Queries.User;
 using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.User;
 using TaskYSI.Infrastructure.Context;

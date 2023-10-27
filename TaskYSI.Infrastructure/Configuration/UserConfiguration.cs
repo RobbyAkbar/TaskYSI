@@ -9,7 +9,7 @@ public class UserConfiguration: IEntityTypeConfiguration<UserModel>
     public void Configure(EntityTypeBuilder<UserModel> builder)
     {
         builder.HasOne(u => u.Role)
-            .WithMany()
+            .WithMany(ur => ur.Users)
             .HasForeignKey(u => u.RoleId);
         
         builder.Property(u => u.Email)
@@ -20,5 +20,9 @@ public class UserConfiguration: IEntityTypeConfiguration<UserModel>
         
         builder.HasIndex(u => u.Email)
             .IsUnique();
+        
+        builder.HasOne(u => u.UserCourse)
+            .WithOne(uc => uc.User)
+            .HasForeignKey<UserCourseModel>(uc => uc.UserId);
     }
 }

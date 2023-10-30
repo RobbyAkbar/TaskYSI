@@ -1,0 +1,28 @@
+@page "/addModule"
+<h3>Add Module</h3>
+
+<AuthorizeView>
+    <Authorized Context="_">
+        <EditForm Model="@_module" OnValidSubmit="OnSubmit">
+            <DataAnnotationsValidator/>
+            <div class="mb-2">
+                <label>Module Name</label>
+                <InputText class="form-control" @bind-Value="_module.ModuleName"/>
+                <ValidationMessage For="@(() => _module.ModuleName)"/>
+            </div>
+            <div class="mb-2">
+                <label>Course</label>
+                <InputSelect class="form-control" @bind-Value="_module.CourseId">
+                    @foreach (var option in _moduleOptions)
+                    {
+                        <option value="@option">@option</option>
+                    }
+                </InputSelect>
+            </div>
+            <button type="submit" class="btn btn-success">@(_isEdit ? "Update" : "Submit")</button>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        Tidak punya akses! Silahkan Login..
+    </NotAuthorized>
+</AuthorizeView>

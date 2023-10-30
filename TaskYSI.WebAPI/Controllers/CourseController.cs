@@ -56,4 +56,41 @@ public class CourseController : ControllerBase
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
+
+    [HttpGet("{id:guid}")]
+    public async Task<ActionResult<CourseResponse>> GetCourseById(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogInformation($"Get Course By Id API Calling in Controller... Id: {id}");
+            
+            var query = new GetCourseByIdQuery(id);
+            var response = await _mediator.Send(query, cancellationToken);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Get Course By Id API Error Occurred: Message {@Message}", ex.Message);
+            return BadRequest(new { IsSuccess = false, ex.Message });
+        }
+    }
+
+    [Route("Search")]
+    [HttpGet]
+    public async Task<ActionResult<List<SearchCourseResult>>> SearchCourseByName(
+        [FromQuery] SearchCourseByNameQuery query, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogInformation($"Search Course By Name API Calling in Controller... Keyword: {query.Keyword}");
+
+            var searchResult = await _mediator.Send(query, cancellationToken);
+            return Ok(searchResult);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Search Course By Name API Error Occurred: Message {@Message}", ex.Message);
+            return BadRequest(new { IsSuccess = false, ex.Message });
+        }
+    }
 }

@@ -1,0 +1,55 @@
+@page "/course"
+
+<PageTitle>Course</PageTitle>
+
+<h1>Course</h1>
+
+<AuthorizeView>
+    <Authorized>
+        @*<pre>
+        @context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+        </pre>*@
+        <a href="/addCourse" class="btn btn-primary">Add Course</a>
+        @if (_courses == null)
+        {
+            <p>
+                <em>Loading...</em>
+            </p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{
+                    var number = 1;
+                }
+                @foreach (var course in _courses)
+                {
+                    var id = course.Id;
+                    <tr>
+                        <td>@number</td>
+                        <td>@course.CourseName</td>
+                        <td>@course.Description</td>
+                        <td>
+                            <a class="btn btn-info" href=@($"/updateCourse/{id}")>Edit</a>
+                            <button class="btn btn-danger" @onclick="() => OnDelete(id)">Delete</button>
+                        </td>
+                    </tr>
+                    number++;
+                }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <NotAuthorized>
+        Tidak punya akses! Silahkan Login..
+    </NotAuthorized>
+</AuthorizeView>

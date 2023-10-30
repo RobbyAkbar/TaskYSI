@@ -1,15 +1,11 @@
 using FluentValidation;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.Commands.InsertModule;
 
 public class InsertModuleCommandValidator: AbstractValidator<InsertModuleCommand>
 {
-    private readonly IDatabaseContext _context;
-    public InsertModuleCommandValidator(IDatabaseContext context)
+    public InsertModuleCommandValidator()
     {
-        _context = context;
-
         RuleFor(x => x.ModuleName)
             .NotEmpty().WithMessage("Module Name is required.");
 

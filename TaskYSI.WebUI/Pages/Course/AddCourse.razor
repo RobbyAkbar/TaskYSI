@@ -1,0 +1,66 @@
+@page "/addCourse"
+@page "/updateCourse/{Guid}"
+<h3>Add Course</h3>
+
+<AuthorizeView>
+    <Authorized Context="_">
+        <EditForm Model="@_course" OnValidSubmit="OnSubmit">
+            <DataAnnotationsValidator/>
+            <div class="mb-2">
+                <label>Course Name</label>
+                <InputText class="form-control" @bind-Value="_course.CourseName"/>
+                <ValidationMessage For="@(() => _course.CourseName)"/>
+            </div>
+            <div class="mb-2">
+                <label>Description</label>
+                <InputTextArea class="form-control" @bind-Value="_course.Description"/>
+                <ValidationMessage For="@(() => _course.Description)"/>
+            </div>
+            @if (_course.Id != System.Guid.Empty)
+            {
+                <div class="mb-2">
+                    <label>Module</label>
+                    <a href="/addModule" class="btn btn-primary">Add Module</a>
+                    @if (_modules is null)
+                    {
+                        <p>
+                            <em>Loading...</em>
+                        </p>
+                    }
+                    else
+                    {
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Module Name</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @{ var number = 1; }
+                            @foreach (var module in _modules)
+                            {
+                                var id = module.Id;
+                                <tr>
+                                    <td>@number</td>
+                                    <td>@module.ModuleName</td>
+                                    <td>
+                                        <a class="btn btn-info" href=@($"/updateModule/{id}")>Edit</a>
+                                        <button class="btn btn-danger" @onclick="() => OnDelete(id)">Delete</button>
+                                    </td>
+                                </tr>
+                                number++;
+                            }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            }
+            <button type="submit" class="btn btn-success">@(_isEdit ? "Update" : "Submit")</button>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        Tidak punya akses! Silahkan Login..
+    </NotAuthorized>
+</AuthorizeView>

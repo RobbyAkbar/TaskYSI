@@ -1,16 +1,8 @@
 using AutoWrapper;
-using Serilog;
 using TaskYSI.Application;
 using TaskYSI.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Setup Serilog
-/*Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.FromLogContext()
-    .CreateLogger();
-builder.Host.UseSerilog(Log.Logger);*/
 
 // Add services to the container.
 

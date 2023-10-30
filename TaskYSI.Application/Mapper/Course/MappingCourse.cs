@@ -10,5 +10,7 @@ public class MappingCourse: Profile
     {
         CreateMap<InsertCourseCommand, CourseModel>();
         CreateMap<CourseModel, CourseResponse>();
+        
+        CreateMap<CourseModel, SearchCourseResult>();
     }
 }

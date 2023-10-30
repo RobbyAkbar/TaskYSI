@@ -17,10 +17,5 @@ public static class DependencyInjection
         
         serviceCollection.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
         serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        
-        /*serviceCollection.AddMvcCore(opt =>
-        {
-            opt.Filters.Add(typeof(GlobalExceptionFilters));
-        });*/
     }
 }

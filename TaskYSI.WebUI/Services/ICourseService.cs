@@ -1,4 +1,5 @@
-﻿using TaskYSI.Domain.Models.Course;
+﻿using RestSharp;
+using TaskYSI.Domain.Models.Course;
 using TaskYSI.WebUI.Data;
 
 namespace TaskYSI.WebUI.Services
@@ -7,8 +8,8 @@ namespace TaskYSI.WebUI.Services
     {
         Task<IEnumerable<CourseResponse>?> GetCourses();
         Task<CourseResponse?> GetCourse(Guid id);
-        Task<string> UpdateCourse(Guid id, CourseData course);
-        Task<string> PostCourse(CourseData course);
-        Task<string> DeleteCourse(Guid id);
+        Task<RestResponse> UpdateCourse(CourseData course);
+        Task<RestResponse> PostCourse(CourseData course);
+        Task<RestResponse> DeleteCourse(Guid id);
     }
 }

@@ -33,28 +33,24 @@ namespace TaskYSI.WebUI.Services
             return result.Data?.Result;
         }
 
-        public async Task<string> UpdateCourse(Guid id, CourseData course)
+        public async Task<RestResponse> UpdateCourse(CourseData course)
         {
-            var result = await _client.PutJsonAsync("api/courses/{id}", course);
-
-            return "Success";
-        }
-
-        public async Task<string> PostCourse(CourseData course)
-        {
-            var request = new RestRequest("api/Course", Method.Post);
-            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            var request = new RestRequest("api/Course");
             request.AddObject(course);
-            var result = await _client.ExecuteAsync(request);
-
-            return "Success";
+            return await _client.PutAsync(request);
         }
 
-        public async Task<string> DeleteCourse(Guid id)
+        public async Task<RestResponse> PostCourse(CourseData course)
         {
-            var result = await _client.DeleteAsync(new RestRequest($"api/courses/{id}"));
+            var request = new RestRequest("api/Course");
+            request.AddObject(course);
+            return await _client.PostAsync(request);
+        }
 
-            return "Success";
+        public async Task<RestResponse> DeleteCourse(Guid id)
+        {
+            var request = new RestRequest($"api/courses/{id}");
+            return await _client.DeleteAsync(request);
         }
 
         public void Dispose()

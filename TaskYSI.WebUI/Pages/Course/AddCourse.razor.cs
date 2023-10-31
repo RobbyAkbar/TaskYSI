@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using TaskYSI.Domain.Models.Module;
 using TaskYSI.WebUI.Data;
 using TaskYSI.WebUI.Services;
+using TaskYSI.WebUI.Shared;
 
 namespace TaskYSI.WebUI.Pages.Course;
 
@@ -16,6 +17,9 @@ public partial class AddCourse
     [Parameter] public string Guid { get; set; } = default!;
 
     private bool _isEdit;
+    private string ModalTitle { get; set; } = default!;
+    private string? ModalMessage { get; set; }
+    private ModalDialog ModalDialog { get; set; } = new();
 
     protected override Task OnInitializedAsync()
     {
@@ -30,8 +34,21 @@ public partial class AddCourse
     {
         if (Id != System.Guid.Empty)
         {
-            await Service.UpdateCourse(Id, _course);
-            NavigationManager.NavigateTo("/course");
+            try
+            {
+                var response = await Service.UpdateCourse(_course);
+                if (response.IsSuccessful)
+                {
+                    NavigationManager.NavigateTo("/course");
+                }
+            }
+            catch (Exception e)
+            {
+                ModalTitle = "Update Failed!";
+                ModalMessage = e.Message;
+                ModalDialog.Open();
+                StateHasChanged();
+            }
         }
         else
         {

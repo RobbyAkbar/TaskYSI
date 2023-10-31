@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskYSI.Application.Commands.InsertCourse;
+using TaskYSI.Application.Commands.UpdateCourse;
 using TaskYSI.Application.Queries.Course;
 using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.Course;
@@ -53,6 +54,24 @@ public class CourseController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError("Get Course API Error Occurred: Message {@Message}", ex.Message);
+            return BadRequest(new { IsSuccess = false, ex.Message });
+        }
+    }
+    
+    [HttpPut]
+    [Consumes("application/x-www-form-urlencoded")]
+    public async Task<IActionResult> UpdateCourse([FromForm] UpdateCourseRequest request, CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Update Course API Calling in Controller... {@Request}", request);
+        try
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+            _logger.LogInformation("Update Course Success {@Response}", response);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Update Course API Error Occur: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }

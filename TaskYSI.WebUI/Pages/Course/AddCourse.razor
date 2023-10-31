@@ -64,3 +64,10 @@
         Tidak punya akses! Silahkan Login..
     </NotAuthorized>
 </AuthorizeView>
+
+<ModalDialog @ref="@ModalDialog" Title="@ModalTitle">
+    <div class="row">
+        <p>@ModalMessage</p>
+        <button class="btn btn-primary" @onclick="() => ModalDialog.Close()">Close</button>
+    </div>
+</ModalDialog>

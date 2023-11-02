@@ -1,10 +1,12 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskYSI.Application.Common.Models;
 using TaskYSI.Application.User.Commands.CreateUser;
 using TaskYSI.Application.User.Commands.CreateUserRole;
 using TaskYSI.Application.User.Queries.GetUserByEmail;
 using TaskYSI.Application.User.Queries.GetUsersWithPagination;
+using TaskYSI.Application.User.Queries.LoginUser;
 using TaskYSI.Application.User.Queries.VerifiedUserEmail;
 using TaskYSI.Application.UserRole.Queries.GetUserRoleItems;
 using TaskYSI.Domain.Models.User;
@@ -104,6 +106,7 @@ public class UserController : ControllerBase
 
     [Route("Search")]
     [HttpPost]
+    [Consumes("application/x-www-form-urlencoded")]
     public async Task<ActionResult<UserResponse>> GetByEmail([FromForm] GetUserByEmailQuery request,
         CancellationToken cancellationToken)
     {
@@ -136,6 +139,25 @@ public class UserController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError("Verified Email API Error Occurred: Message {@Message}", ex.Message);
+            return BadRequest(new { IsSuccess = false, ex.Message });
+        }
+    }
+    
+    [AllowAnonymous]
+    [Route("Login")]
+    [HttpPost]
+    [Consumes("application/x-www-form-urlencoded")]
+    public async Task<ActionResult<LoginUserResponse>> Login([FromForm] LoginUserQuery request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogInformation("Login User API Calling in Controller...");
+            var response = await _mediator.Send(request, cancellationToken);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Login User API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }

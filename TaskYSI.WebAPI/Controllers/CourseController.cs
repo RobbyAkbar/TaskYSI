@@ -1,7 +1,9 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskYSI.Application.Common.Models;
 using TaskYSI.Application.Course.Commands.CreateCourse;
+using TaskYSI.Application.Course.Commands.DeleteCourse;
 using TaskYSI.Application.Course.Commands.UpdateCourse;
 using TaskYSI.Application.Course.Queries.GetCourseById;
 using TaskYSI.Application.Course.Queries.GetCourseItemsWithPagination;
@@ -43,6 +45,7 @@ public class CourseController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize(Roles = "Student")]
     public async Task<ActionResult<PaginatedList<CourseResponse>>> GetCourseItemsWithPagination([FromQuery] GetCourseItemsWithPaginationQuery query, CancellationToken cancellationToken)
     {
         try
@@ -75,6 +78,24 @@ public class CourseController : ControllerBase
         {
             _logger.LogError("Update Course API Error Occur: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
+        }
+    }
+    
+    [HttpDelete("{id:guid}")]
+    public async Task<IResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            _logger.LogInformation($"Delete Course By Id API Calling in Controller... Id: {id}");
+            
+            var query = new DeleteCourseCommand(id);
+            await _mediator.Send(query, cancellationToken);
+            return Results.NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Get Course By Id API Error Occurred: Message {@Message}", ex.Message);
+            return Results.BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
 

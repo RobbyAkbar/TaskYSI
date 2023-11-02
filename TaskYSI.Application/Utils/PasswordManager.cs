@@ -1,12 +1,12 @@
 namespace TaskYSI.Application.Utils;
 
-public class PasswordManager
+public static class PasswordManager
 {
     public static string HashPassword(string password)
     {
         // Generate a salt and hash the password with it
-        string salt = BCrypt.Net.BCrypt.GenerateSalt(12);
-        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
+        var salt = BCrypt.Net.BCrypt.GenerateSalt(12);
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
         return hashedPassword;
     }
 

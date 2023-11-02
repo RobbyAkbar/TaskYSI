@@ -1,4 +1,3 @@
-using MediatR;
 using TaskYSI.Domain.Models.User;
 
 namespace TaskYSI.Application.UserCourse.Queries.GetUserCourse;

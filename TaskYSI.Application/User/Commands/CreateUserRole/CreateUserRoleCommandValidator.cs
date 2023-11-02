@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace TaskYSI.Application.User.Commands.CreateUserRole;
 
 public class CreateUserRoleCommandValidator: AbstractValidator<CreateUserRoleCommand>

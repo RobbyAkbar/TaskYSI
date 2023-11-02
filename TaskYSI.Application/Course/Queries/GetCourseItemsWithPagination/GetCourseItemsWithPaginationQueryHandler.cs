@@ -1,11 +1,7 @@
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using TaskYSI.Application.Utils;
-using TaskYSI.Domain.Models;
+using TaskYSI.Application.Common.Interfaces;
+using TaskYSI.Application.Common.Mappings;
+using TaskYSI.Application.Common.Models;
 using TaskYSI.Domain.Models.Course;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.Course.Queries.GetCourseItemsWithPagination;
 

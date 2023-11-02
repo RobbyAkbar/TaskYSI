@@ -1,4 +1,3 @@
-using AutoMapper;
 using TaskYSI.Application.UserCourse.Commands.CreateUserCourse;
 using TaskYSI.Domain.Models.User;
 

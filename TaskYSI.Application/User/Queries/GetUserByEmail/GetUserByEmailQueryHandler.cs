@@ -1,9 +1,6 @@
-using AutoMapper;
 using AutoWrapper.Wrappers;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Domain.Models.User;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.User.Queries.GetUserByEmail;
 

@@ -1,9 +1,5 @@
-using AutoMapper;
-using FluentValidation;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Domain.Models.Module;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.Module.Commands.CreateModule;
 

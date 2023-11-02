@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace TaskYSI.Application.Course.Queries.GetCourseById;
 
 public class GetCourseByIdQueryValidator: AbstractValidator<GetCourseByIdQuery>

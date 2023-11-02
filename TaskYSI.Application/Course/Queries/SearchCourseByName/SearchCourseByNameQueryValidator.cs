@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace TaskYSI.Application.Course.Queries.SearchCourseByName;
 
 public class SearchCourseByNameQueryValidator : AbstractValidator<SearchCourseByNameQuery>

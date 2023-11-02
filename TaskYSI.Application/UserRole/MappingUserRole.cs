@@ -1,4 +1,3 @@
-using AutoMapper;
 using TaskYSI.Application.User.Commands.CreateUserRole;
 using TaskYSI.Domain.Models.UserRole;
 

@@ -1,7 +1,6 @@
-using FluentValidation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TaskYSI.Infrastructure.Context;
+using TaskYSI.Application.Common.Interfaces;
 
 namespace TaskYSI.Application.UserCourse.Commands.CreateUserCourse;
 

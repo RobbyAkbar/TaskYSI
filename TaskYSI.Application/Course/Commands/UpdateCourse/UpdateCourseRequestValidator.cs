@@ -1,5 +1,4 @@
-using FluentValidation;
-using TaskYSI.Infrastructure.Context;
+using TaskYSI.Application.Common.Interfaces;
 
 namespace TaskYSI.Application.Course.Commands.UpdateCourse;
 

@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace TaskYSI.Application.Course.Commands.CreateCourse;
 
 public class CreateCourseCommandValidator: AbstractValidator<CreateCourseCommand>

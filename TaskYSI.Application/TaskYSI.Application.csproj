@@ -17,7 +17,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\TaskYSI.Domain\TaskYSI.Domain.csproj"/>
-        <ProjectReference Include="..\TaskYSI.Infrastructure\TaskYSI.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

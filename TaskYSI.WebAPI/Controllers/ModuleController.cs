@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TaskYSI.Application.Common.Models;
 using TaskYSI.Application.Module.Commands.CreateModule;
 using TaskYSI.Application.Module.Queries.GetModuleItemsWithPagination;
-using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.Module;
 
 namespace TaskYSI.WebAPI.Controllers;

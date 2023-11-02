@@ -1,10 +1,9 @@
-using Microsoft.EntityFrameworkCore;
 using TaskYSI.Domain.Models.Course;
 using TaskYSI.Domain.Models.Module;
 using TaskYSI.Domain.Models.User;
 using TaskYSI.Domain.Models.UserRole;
 
-namespace TaskYSI.Infrastructure.Context;
+namespace TaskYSI.Application.Common.Interfaces;
 
 public interface IDatabaseContext
 {

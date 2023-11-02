@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace TaskYSI.Application.Module.Queries.GetModuleItemsWithPagination;
 
 public class GetModuleItemsWithPaginationQueryValidator: AbstractValidator<GetModuleItemsWithPaginationQuery>

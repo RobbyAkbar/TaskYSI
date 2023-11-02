@@ -1,8 +1,5 @@
-using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Domain.Models.UserRole;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.UserRole.Queries.GetUserRoleItems;
 

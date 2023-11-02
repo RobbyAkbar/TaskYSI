@@ -1,7 +1,5 @@
-using AutoMapper;
-using MediatR;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Domain.Models.UserRole;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.User.Commands.CreateUserRole;
 

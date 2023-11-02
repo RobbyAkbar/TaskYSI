@@ -1,5 +1,4 @@
-using MediatR;
-using TaskYSI.Domain.Models;
+using TaskYSI.Application.Common.Models;
 using TaskYSI.Domain.Models.Module;
 
 namespace TaskYSI.Application.Module.Queries.GetModuleItemsWithPagination;

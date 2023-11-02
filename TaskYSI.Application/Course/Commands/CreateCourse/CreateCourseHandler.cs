@@ -1,7 +1,5 @@
-using AutoMapper;
-using MediatR;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Domain.Models.Course;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.Course.Commands.CreateCourse;
 

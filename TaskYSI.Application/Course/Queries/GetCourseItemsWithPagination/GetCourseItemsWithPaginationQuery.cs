@@ -1,5 +1,4 @@
-using MediatR;
-using TaskYSI.Domain.Models;
+using TaskYSI.Application.Common.Models;
 using TaskYSI.Domain.Models.Course;
 
 namespace TaskYSI.Application.Course.Queries.GetCourseItemsWithPagination;

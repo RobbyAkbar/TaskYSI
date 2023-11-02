@@ -1,5 +1,4 @@
-using MediatR;
-using TaskYSI.Domain.Models;
+using TaskYSI.Application.Common.Models;
 using TaskYSI.Domain.Models.User;
 
 namespace TaskYSI.Application.User.Queries.GetUsersWithPagination;

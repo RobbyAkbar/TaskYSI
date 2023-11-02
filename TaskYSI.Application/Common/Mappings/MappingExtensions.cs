@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.EntityFrameworkCore;
-using TaskYSI.Domain.Models;
+﻿using TaskYSI.Application.Common.Models;
 
-namespace TaskYSI.Application.Utils;
+namespace TaskYSI.Application.Common.Mappings;
 
 public static class MappingExtensions
 {

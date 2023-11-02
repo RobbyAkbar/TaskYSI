@@ -1,8 +1,6 @@
 using System.Text.Json;
-using AutoMapper;
-using MediatR;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Domain.Models.User;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.UserCourse.Commands.CreateUserCourse;
 

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Domain.Models.Category;
 using TaskYSI.Domain.Models.Course;
 using TaskYSI.Domain.Models.Module;

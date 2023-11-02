@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace TaskYSI.Application.Module.Commands.CreateModule;
 
 public class CreateModuleCommandValidator: AbstractValidator<CreateModuleCommand>

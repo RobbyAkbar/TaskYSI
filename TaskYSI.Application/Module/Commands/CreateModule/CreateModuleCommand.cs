@@ -1,4 +1,3 @@
-using MediatR;
 using TaskYSI.Domain.Models.Module;
 
 namespace TaskYSI.Application.Module.Commands.CreateModule;

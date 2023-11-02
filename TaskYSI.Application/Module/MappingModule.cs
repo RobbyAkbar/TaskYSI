@@ -1,4 +1,3 @@
-using AutoMapper;
 using TaskYSI.Application.Module.Commands.CreateModule;
 using TaskYSI.Domain.Models.Module;
 

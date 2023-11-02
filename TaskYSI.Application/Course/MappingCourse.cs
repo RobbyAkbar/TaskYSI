@@ -1,4 +1,3 @@
-using AutoMapper;
 using TaskYSI.Application.Course.Commands.CreateCourse;
 using TaskYSI.Application.Course.Commands.UpdateCourse;
 using TaskYSI.Domain.Models.Course;

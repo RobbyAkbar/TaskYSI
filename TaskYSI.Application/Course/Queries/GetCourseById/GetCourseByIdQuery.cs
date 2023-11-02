@@ -1,4 +1,3 @@
-using MediatR;
 using TaskYSI.Domain.Models.Course;
 
 namespace TaskYSI.Application.Course.Queries.GetCourseById;

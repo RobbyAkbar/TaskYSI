@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace TaskYSI.Application.User.Queries.GetUsersWithPagination;
 
 public class GetUsersWithPaginationQueryValidator: AbstractValidator<GetUsersWithPaginationQuery>

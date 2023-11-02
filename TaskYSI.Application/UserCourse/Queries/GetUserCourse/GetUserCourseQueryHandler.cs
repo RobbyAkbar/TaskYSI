@@ -1,9 +1,7 @@
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Application.Utils;
-using UserCourseAlias = TaskYSI.Domain.Models.Course.UserCourse;
 using TaskYSI.Domain.Models.User;
-using TaskYSI.Infrastructure.Context;
+using UserCourseAlias = TaskYSI.Domain.Models.Course.UserCourse;
 
 namespace TaskYSI.Application.UserCourse.Queries.GetUserCourse;
 

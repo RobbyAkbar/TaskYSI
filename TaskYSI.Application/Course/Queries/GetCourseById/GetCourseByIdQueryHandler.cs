@@ -1,8 +1,5 @@
-using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Domain.Models.Course;
-using TaskYSI.Infrastructure.Context;
 
 namespace TaskYSI.Application.Course.Queries.GetCourseById;
 

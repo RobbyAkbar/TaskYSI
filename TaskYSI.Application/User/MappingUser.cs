@@ -1,4 +1,3 @@
-using AutoMapper;
 using TaskYSI.Application.User.Commands.CreateUser;
 using TaskYSI.Domain.Models.User;
 

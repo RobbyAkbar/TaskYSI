@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace TaskYSI.Domain.Models;
+﻿namespace TaskYSI.Application.Common.Models;
 
 public class PaginatedList<T>
 {

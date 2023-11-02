@@ -20,4 +20,9 @@
         <ProjectReference Include="..\TaskYSI.Infrastructure\TaskYSI.Infrastructure.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Module\Commands\" />
+      <Folder Include="UserCourse\Commands\" />
+    </ItemGroup>
+
 </Project>

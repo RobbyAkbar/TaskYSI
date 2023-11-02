@@ -1,12 +1,15 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TaskYSI.Application.Commands.InsertUser;
-using TaskYSI.Application.Commands.InsertUserRole;
-using TaskYSI.Application.Queries.User;
-using TaskYSI.Application.Queries.UserRole;
+using TaskYSI.Application.User.Commands.CreateUser;
+using TaskYSI.Application.User.Commands.CreateUserRole;
+using TaskYSI.Application.User.Queries.GetUserByEmail;
+using TaskYSI.Application.User.Queries.GetUsersWithPagination;
+using TaskYSI.Application.User.Queries.VerifiedUserEmail;
+using TaskYSI.Application.UserRole.Queries.GetUserRoleItems;
 using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.User;
 using TaskYSI.Domain.Models.UserRole;
+using TaskYSI.WebAPI.Attributes;
 
 namespace TaskYSI.WebAPI.Controllers;
 
@@ -26,7 +29,7 @@ public class UserController : ControllerBase
     [Route("CreateUserRole")]
     [HttpPost]
     [Consumes("application/x-www-form-urlencoded")]
-    public async Task<ActionResult<UserRoleResponse>> Create([FromForm] InsertUserRoleCommand request,
+    public async Task<ActionResult<UserRoleResponse>> Create([FromForm] CreateUserRoleCommand request,
         CancellationToken cancellationToken)
     {
         _logger.LogInformation("Create User Role API Calling in Controller... {@Request}", request);
@@ -60,9 +63,10 @@ public class UserController : ControllerBase
         }
     }
 
+    [AllowAnonymous]
     [HttpPost]
     [Consumes("application/x-www-form-urlencoded")]
-    public async Task<ActionResult<UserResponse>> Create([FromForm] InsertUserCommand request,
+    public async Task<ActionResult<UserResponse>> Create([FromForm] CreateUserCommand request,
         CancellationToken cancellationToken)
     {
         _logger.LogInformation("Create User API Calling in Controller... {@Request}", request);

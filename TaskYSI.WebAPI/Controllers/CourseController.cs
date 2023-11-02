@@ -1,10 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TaskYSI.Application.Commands.InsertCourse;
-using TaskYSI.Application.Commands.UpdateCourse;
-using TaskYSI.Application.Queries.Course;
+using TaskYSI.Application.Course.Commands.CreateCourse;
+using TaskYSI.Application.Course.Commands.UpdateCourse;
+using TaskYSI.Application.Course.Queries.GetCourseById;
+using TaskYSI.Application.Course.Queries.GetCourseItemsWithPagination;
+using TaskYSI.Application.Course.Queries.SearchCourseByName;
 using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.Course;
+using TaskYSI.WebAPI.Attributes;
+using TaskYSI.WebAPI.Constants;
 
 namespace TaskYSI.WebAPI.Controllers;
 
@@ -21,9 +25,10 @@ public class CourseController : ControllerBase
         _logger = logger;
     }
 
+    [Authorize(PrivilegeConst.CreateCourse)]
     [HttpPost]
     [Consumes("application/x-www-form-urlencoded")]
-    public async Task<ActionResult<CourseResponse>> Create([FromForm] InsertCourseCommand request,
+    public async Task<ActionResult<CourseResponse>> Create([FromForm] CreateCourseCommand request,
         CancellationToken cancellationToken)
     {
         _logger.LogInformation("Create Course API Calling in Controller... {@Request}", request);
@@ -40,6 +45,7 @@ public class CourseController : ControllerBase
         }
     }
     
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<PaginatedList<CourseResponse>>> GetCourseItemsWithPagination([FromQuery] GetCourseItemsWithPaginationQuery query, CancellationToken cancellationToken)
     {
@@ -58,6 +64,7 @@ public class CourseController : ControllerBase
         }
     }
     
+    [Authorize(PrivilegeConst.UpdateCourse)]
     [HttpPut]
     [Consumes("application/x-www-form-urlencoded")]
     public async Task<IActionResult> UpdateCourse([FromForm] UpdateCourseRequest request, CancellationToken cancellationToken)
@@ -76,6 +83,7 @@ public class CourseController : ControllerBase
         }
     }
 
+    [Authorize(PrivilegeConst.ReadCourse)]
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<CourseResponse>> GetCourseById(Guid id, CancellationToken cancellationToken)
     {
@@ -94,6 +102,7 @@ public class CourseController : ControllerBase
         }
     }
 
+    [Authorize(PrivilegeConst.ReadCourse)]
     [Route("Search")]
     [HttpGet]
     public async Task<ActionResult<List<SearchCourseResult>>> SearchCourseByName(

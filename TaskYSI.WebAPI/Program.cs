@@ -1,6 +1,7 @@
 using AutoWrapper;
 using TaskYSI.Application;
 using TaskYSI.Infrastructure;
+using TaskYSI.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,4 +31,5 @@ app.MapControllers();
 // Setup AutoWrapper
 app.UseApiResponseAndExceptionWrapper();
 
+app.UseMiddleware<JwtMiddleware>();
 app.Run();

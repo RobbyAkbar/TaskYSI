@@ -6,4 +6,6 @@ riderModule.iml
 .idea/
 TaskYSI.Infrastructure/Migrations/
 TaskYSI.WebUI/Data/Migrations/
+TaskYSI.WebUI/app.db-shm
+TaskYSI.WebUI/app.db-wal
 .DS_Store

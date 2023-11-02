@@ -15,4 +15,5 @@ public class PostgreSqlContext : DbContext, IDatabaseContext
     public required DbSet<UserModel> Users { get; set; }
     public required DbSet<ModuleModel> Modules { get; set; }
     public required DbSet<UserCourseModel> UserCourses { get; set; }
+    public required DbSet<RolePrivilege> RolePrivileges { get; set; }
 }

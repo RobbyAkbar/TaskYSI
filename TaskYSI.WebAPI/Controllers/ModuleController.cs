@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TaskYSI.Application.Commands.InsertModule;
-using TaskYSI.Application.Queries.Module;
+using TaskYSI.Application.Module.Commands.CreateModule;
+using TaskYSI.Application.Module.Queries.GetModuleItemsWithPagination;
 using TaskYSI.Domain.Models;
 using TaskYSI.Domain.Models.Module;
 
@@ -22,7 +22,7 @@ public class ModuleController : ControllerBase
 
     [HttpPost]
     [Consumes("application/x-www-form-urlencoded")]
-    public async Task<ActionResult<ModuleResponse>> Create([FromForm] InsertModuleCommand request,
+    public async Task<ActionResult<ModuleResponse>> Create([FromForm] CreateModuleCommand request,
         CancellationToken cancellationToken)
     {
         _logger.LogInformation("Create Module API Calling in Controller... {@Request}", request);

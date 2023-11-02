@@ -13,5 +13,6 @@ public interface IDatabaseContext
     DbSet<UserModel> Users { get; set; }
     DbSet<ModuleModel> Modules { get; set; }
     DbSet<UserCourseModel> UserCourses { get; set; }
+    DbSet<RolePrivilege> RolePrivileges { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TaskYSI.Application.Commands.InsertUser;
-using TaskYSI.Application.Queries.UserCourse;
+using TaskYSI.Application.UserCourse.Commands.CreateUserCourse;
+using TaskYSI.Application.UserCourse.Queries.GetUserCourse;
 using TaskYSI.Domain.Models.User;
 
 namespace TaskYSI.WebAPI.Controllers;
@@ -21,7 +21,7 @@ public class UserRedeemController : ControllerBase
     
     [HttpPost]
     [Consumes("application/x-www-form-urlencoded")]
-    public async Task<ActionResult<UserCourseResponse>> Create([FromForm] InsertUserCourseCommand request,
+    public async Task<ActionResult<UserCourseResponse>> Create([FromForm] CreateUserCourseCommand request,
         CancellationToken cancellationToken)
     {
         _logger.LogInformation("Create User Course API Calling in Controller... {@Request}", request);

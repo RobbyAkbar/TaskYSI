@@ -3,23 +3,14 @@ using TaskYSI.Domain.Models.Course;
 
 namespace TaskYSI.Application.Course.Commands.UpdateCourse;
 
-public class UpdateCourseHandler: IRequestHandler<UpdateCourseRequest, CourseResponse>
+public class UpdateCourseHandler(IDatabaseContext context, IMapper mapper) : IRequestHandler<UpdateCourseRequest, CourseResponse>
 {
-    private readonly IDatabaseContext _context;
-    private readonly IMapper _mapper;
-
-    public UpdateCourseHandler(IDatabaseContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<CourseResponse> Handle(UpdateCourseRequest request, CancellationToken cancellationToken)
     {
-        var course = _mapper.Map<CourseModel>(request);
-        _context.Courses.Update(course);
-        await _context.SaveChangesAsync(cancellationToken);
+        var course = mapper.Map<CourseModel>(request);
+        context.Courses.Update(course);
+        await context.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<CourseResponse>(course);
+        return mapper.Map<CourseResponse>(course);
     }
 }

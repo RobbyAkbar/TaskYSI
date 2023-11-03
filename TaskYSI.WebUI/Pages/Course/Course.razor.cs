@@ -4,7 +4,7 @@ using TaskYSI.WebUI.Services;
 
 namespace TaskYSI.WebUI.Pages.Course;
 
-public partial class Course
+public partial class Course: ComponentBase
 {
     private IEnumerable<CourseResponse>? _courses;
 

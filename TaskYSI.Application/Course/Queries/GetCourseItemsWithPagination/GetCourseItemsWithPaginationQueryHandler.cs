@@ -5,23 +5,14 @@ using TaskYSI.Domain.Models.Course;
 
 namespace TaskYSI.Application.Course.Queries.GetCourseItemsWithPagination;
 
-public class GetCourseItemsWithPaginationQueryHandler: IRequestHandler<GetCourseItemsWithPaginationQuery, PaginatedList<CourseResponse>>
+public class GetCourseItemsWithPaginationQueryHandler(IDatabaseContext context, IMapper mapper) : IRequestHandler<GetCourseItemsWithPaginationQuery, PaginatedList<CourseResponse>>
 {
-    private readonly IDatabaseContext _context;
-    private readonly IMapper _mapper;
-
-    public GetCourseItemsWithPaginationQueryHandler(IDatabaseContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<PaginatedList<CourseResponse>> Handle(GetCourseItemsWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Courses
+        return await context.Courses
             .Include(c => c.Modules)
             .OrderBy(x => x.CourseName)
-            .ProjectTo<CourseResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<CourseResponse>(mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

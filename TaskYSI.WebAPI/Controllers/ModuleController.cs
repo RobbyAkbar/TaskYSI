@@ -1,4 +1,4 @@
-using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskYSI.Application.Common.Models;
 using TaskYSI.Application.Module.Commands.CreateModule;
@@ -9,50 +9,43 @@ namespace TaskYSI.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ModuleController : ControllerBase
+public class ModuleController(ISender mediator, ILogger<ModuleController> logger) : ControllerBase
 {
-    private readonly IMediator _mediator;
-    private readonly ILogger<ModuleController> _logger;
-
-    public ModuleController(IMediator mediator, ILogger<ModuleController> logger)
-    {
-        _mediator = mediator;
-        _logger = logger;
-    }
-
     [HttpPost]
+    [Authorize(Roles = "Admin,Teacher")]
     [Consumes("application/x-www-form-urlencoded")]
     public async Task<ActionResult<ModuleResponse>> Create([FromForm] CreateModuleCommand request,
         CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Create Module API Calling in Controller... {@Request}", request);
+        logger.LogInformation("Create Module API Calling in Controller... {@Request}", request);
         try
         {
-            var response = await _mediator.Send(request, cancellationToken);
-            _logger.LogInformation("Insert Module Success {@Response}", response);
+            var response = await mediator.Send(request, cancellationToken);
+            logger.LogInformation("Insert Module Success {@Response}", response);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Create Module API Error Occur: Message {@Message}", ex.Message);
+            logger.LogError("Create Module API Error Occur: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
     
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<PaginatedList<ModuleResponse>>> GetModuleItemsWithPagination([FromQuery] GetModuleItemsWithPaginationQuery query, CancellationToken cancellationToken)
     {
         try
         {
-            _logger.LogInformation($"Get Module API Calling in Controller: PageNumber {query.PageNumber}, PageSize {query.PageSize}");
+            logger.LogInformation($"Get Module API Calling in Controller: PageNumber {query.PageNumber}, PageSize {query.PageSize}");
 
             // Mengirim permintaan dengan parameter paginasi ke mediator
-            var response = await _mediator.Send(query, cancellationToken);
+            var response = await mediator.Send(query, cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Get Module API Error Occurred: Message {@Message}", ex.Message);
+            logger.LogError("Get Module API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }

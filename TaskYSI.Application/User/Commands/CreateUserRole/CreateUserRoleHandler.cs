@@ -3,23 +3,14 @@ using TaskYSI.Domain.Models.UserRole;
 
 namespace TaskYSI.Application.User.Commands.CreateUserRole;
 
-public class CreateUserRoleHandler: IRequestHandler<CreateUserRoleCommand, UserRoleResponse>
+public class CreateUserRoleHandler(IDatabaseContext context, IMapper mapper) : IRequestHandler<CreateUserRoleCommand, UserRoleResponse>
 {
-    private readonly IDatabaseContext _context;
-    private readonly IMapper _mapper;
-
-    public CreateUserRoleHandler(IDatabaseContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<UserRoleResponse> Handle(CreateUserRoleCommand request, CancellationToken cancellationToken)
     {
-        var userRole = _mapper.Map<UserRoleModel>(request);
-        _context.UserRoles.Add(userRole);
-        await _context.SaveChangesAsync(cancellationToken);
+        var userRole = mapper.Map<UserRoleModel>(request);
+        context.UserRoles.Add(userRole);
+        await context.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<UserRoleResponse>(userRole);
+        return mapper.Map<UserRoleResponse>(userRole);
     }
 }

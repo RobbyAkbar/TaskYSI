@@ -3,20 +3,11 @@ using TaskYSI.Domain.Models.User;
 
 namespace TaskYSI.Application.User.Queries.VerifiedUserEmail;
 
-public class VerifiedUserEmailQueryHandler : IRequestHandler<VerifiedUserEmailQuery, UserResponse>
+public class VerifiedUserEmailQueryHandler(IDatabaseContext context, IMapper mapper) : IRequestHandler<VerifiedUserEmailQuery, UserResponse>
 {
-    private readonly IDatabaseContext _context;
-    private readonly IMapper _mapper;
-
-    public VerifiedUserEmailQueryHandler(IDatabaseContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<UserResponse> Handle(VerifiedUserEmailQuery request, CancellationToken cancellationToken)
     {
-        var user = await _context.Users
+        var user = await context.Users
             .Include(u => u.Role)
             .FirstOrDefaultAsync(u => u.Id == request.Code, cancellationToken);
 
@@ -28,8 +19,8 @@ public class VerifiedUserEmailQueryHandler : IRequestHandler<VerifiedUserEmailQu
         user.IsVerified = true;
         user.DateUpdated = DateTimeOffset.Now;
 
-        await _context.SaveChangesAsync(cancellationToken);
-        var userResponse = _mapper.Map<UserResponse>(user);
+        await context.SaveChangesAsync(cancellationToken);
+        var userResponse = mapper.Map<UserResponse>(user);
 
         return userResponse;
     }

@@ -5,22 +5,13 @@ using TaskYSI.Domain.Models.User;
 
 namespace TaskYSI.Application.User.Queries.GetUsersWithPagination;
 
-public class GetUsersWithPaginationQueryHandler: IRequestHandler<GetUsersWithPaginationQuery, PaginatedList<UserResponse>>
+public class GetUsersWithPaginationQueryHandler(IDatabaseContext context, IMapper mapper) : IRequestHandler<GetUsersWithPaginationQuery, PaginatedList<UserResponse>>
 {
-    private readonly IDatabaseContext _context;
-    private readonly IMapper _mapper;
-
-    public GetUsersWithPaginationQueryHandler(IDatabaseContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<PaginatedList<UserResponse>> Handle(GetUsersWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Users
+        return await context.Users
             .OrderBy(x => x.Email)
-            .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<UserResponse>(mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

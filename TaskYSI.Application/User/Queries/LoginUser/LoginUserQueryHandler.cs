@@ -1,42 +1,37 @@
-using AutoWrapper.Wrappers;
 using Microsoft.Extensions.Configuration;
+using TaskYSI.Application.Common.Exceptions;
 using TaskYSI.Application.Common.Interfaces;
 using TaskYSI.Application.Utils;
 using TaskYSI.Domain.Models.User;
 
 namespace TaskYSI.Application.User.Queries.LoginUser;
 
-public class LoginUserQueryHandler : IRequestHandler<LoginUserQuery, LoginUserResponse>
+public class LoginUserQueryHandler(IDatabaseContext context, IMapper mapper, IConfiguration config)
+    : IRequestHandler<LoginUserQuery, LoginUserResponse>
 {
-    private readonly IDatabaseContext _context;
-    private readonly IMapper _mapper;
-    private readonly IConfiguration _config;
-
-    public LoginUserQueryHandler(IDatabaseContext context, IMapper mapper, IConfiguration config)
-    {
-        _context = context;
-        _mapper = mapper;
-        _config = config;
-    }
-
     public async Task<LoginUserResponse> Handle(LoginUserQuery request, CancellationToken cancellationToken)
     {
-        var currentUser = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(
-            x => x.Email.ToLower().Contains(request.Email.ToLower()),
+        var currentUser = await context.Users.Include(u => u.Role).FirstOrDefaultAsync(
+            x => x.Email == request.Email,
             cancellationToken: cancellationToken);
 
         if (currentUser == null)
         {
-            throw new ApiException("Email tidak terdaftar.");
+            throw new UserNotFoundException("Email tidak terdaftar.");
         }
 
         if (!PasswordManager.VerifyPassword(request.Password, currentUser.Password))
         {
-            throw new ApiException("Kata sandi salah.");
+            throw new FormatException("Kata sandi salah.");
         }
 
-        var user = _mapper.Map<LoginUserResponse>(currentUser);
-        user.AccessToken = new AccessToken(_config).GenerateToken(currentUser);
+        if (!currentUser.IsVerified)
+        {
+            throw new FormatException("Email belum terverifikasi.");
+        }
+
+        var user = mapper.Map<LoginUserResponse>(currentUser);
+        user.AccessToken = new AccessToken(config).GenerateToken(currentUser);
 
         return user;
     }

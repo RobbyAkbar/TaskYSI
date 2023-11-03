@@ -1,4 +1,3 @@
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskYSI.Application.Common.Models;
@@ -16,129 +15,126 @@ namespace TaskYSI.WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class UserController : ControllerBase
+public class UserController(ISender mediator, ILogger<UserController> logger) : ControllerBase
 {
-    private readonly IMediator _mediator;
-    private readonly ILogger<UserController> _logger;
-
-    public UserController(IMediator mediator, ILogger<UserController> logger)
-    {
-        _mediator = mediator;
-        _logger = logger;
-    }
-
     [Route("CreateUserRole")]
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [Consumes("application/x-www-form-urlencoded")]
     public async Task<ActionResult<UserRoleResponse>> Create([FromForm] CreateUserRoleCommand request,
         CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Create User Role API Calling in Controller... {@Request}", request);
+        logger.LogInformation("Create User Role API Calling in Controller... {@Request}", request);
         try
         {
-            var response = await _mediator.Send(request, cancellationToken);
-            _logger.LogInformation("Insert User Role Success {@Response}", response);
+            var response = await mediator.Send(request, cancellationToken);
+            logger.LogInformation("Insert User Role Success {@Response}", response);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Create User Role API Error Occur: Message {@Message}", ex.Message);
+            logger.LogError("Create User Role API Error Occur: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
 
     [Route("GetUserRoles")]
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<List<UserRoleResponse>>> GetUserRoles(CancellationToken cancellationToken)
     {
         try
         {
-            _logger.LogInformation("Get User Role API Calling in Controller...");
-            var response = await _mediator.Send(new GetUserRoleItemsQuery(), cancellationToken);
+            logger.LogInformation("Get User Role API Calling in Controller...");
+            var response = await mediator.Send(new GetUserRoleItemsQuery(), cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Get User Role API Error Occurred: Message {@Message}", ex.Message);
+            logger.LogError("Get User Role API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
 
     [HttpPost]
+    [AllowAnonymous]
     [Consumes("application/x-www-form-urlencoded")]
     public async Task<ActionResult<UserResponse>> Create([FromForm] CreateUserCommand request,
         CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Create User API Calling in Controller... {@Request}", request);
+        logger.LogInformation("Create User API Calling in Controller... {@Request}", request);
         try
         {
-            var response = await _mediator.Send(request, cancellationToken);
-            _logger.LogInformation("Insert User Success {@Response}", response);
+            var response = await mediator.Send(request, cancellationToken);
+            logger.LogInformation("Insert User Success {@Response}", response);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Create User API Error Occur: Message {@Message}", ex.Message);
+            logger.LogError("Create User API Error Occur: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
 
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<PaginatedList<UserResponse>>> GetUsersWithPagination(
         [FromQuery] GetUsersWithPaginationQuery query, CancellationToken cancellationToken)
     {
         try
         {
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Get Users API Calling in Controller: PageNumber {PageNumber}, PageSize {PageSize}", query.PageNumber,
                 query.PageSize);
 
             // Mengirim permintaan dengan parameter paginasi ke mediator
-            var response = await _mediator.Send(query, cancellationToken);
+            var response = await mediator.Send(query, cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Get Users API Error Occurred: Message {@Message}", ex.Message);
+            logger.LogError("Get Users API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
 
     [Route("Search")]
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     [Consumes("application/x-www-form-urlencoded")]
     public async Task<ActionResult<UserResponse>> GetByEmail([FromForm] GetUserByEmailQuery request,
         CancellationToken cancellationToken)
     {
         try
         {
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Get User by Email API Calling in Controller...");
 
-            var response = await _mediator.Send(request, cancellationToken);
+            var response = await mediator.Send(request, cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Get User by Email API Error Occurred: Message {@Message}", ex.Message);
+            logger.LogError("Get User by Email API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
 
     [Route("VerifiedEmail")]
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<UserResponse>> VerifiedUserEmail([FromQuery] VerifiedUserEmailQuery query,
         CancellationToken cancellationToken)
     {
         try
         {
-            _logger.LogInformation("Verified Email API Calling in Controller...");
-            var response = await _mediator.Send(query, cancellationToken);
+            logger.LogInformation("Verified Email API Calling in Controller...");
+            var response = await mediator.Send(query, cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Verified Email API Error Occurred: Message {@Message}", ex.Message);
+            logger.LogError("Verified Email API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }
@@ -151,13 +147,13 @@ public class UserController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Login User API Calling in Controller...");
-            var response = await _mediator.Send(request, cancellationToken);
+            logger.LogInformation("Login User API Calling in Controller...");
+            var response = await mediator.Send(request, cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError("Login User API Error Occurred: Message {@Message}", ex.Message);
+            logger.LogError("Login User API Error Occurred: Message {@Message}", ex.Message);
             return BadRequest(new { IsSuccess = false, ex.Message });
         }
     }

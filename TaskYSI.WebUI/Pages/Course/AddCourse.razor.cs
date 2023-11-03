@@ -6,7 +6,7 @@ using TaskYSI.WebUI.Shared;
 
 namespace TaskYSI.WebUI.Pages.Course;
 
-public partial class AddCourse
+public partial class AddCourse: ComponentBase
 {
     [Inject] private ICourseService Service { get; set; } = default!;
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;

@@ -20,17 +20,17 @@ namespace TaskYSI.WebUI.Services
         public async Task<IEnumerable<CourseResponse>?> GetCourses()
         {
             var request = new RestRequest("api/Course");
-            var result = await _client.ExecuteAsync<AutoWrapperResponse<PaginatedListResponse<CourseResponse>>>(request);
+            var result = await _client.ExecuteAsync<PaginatedListResponse<CourseResponse>>(request);
 
-            return result is { IsSuccessful: true, Data.Result: not null } ? result.Data.Result.Items.ToList() : null;
+            return result is { IsSuccessful: true, Data: not null } ? result.Data.Items.ToList() : null;
         }
 
         public async Task<CourseResponse?> GetCourse(Guid id)
         {
             var request = new RestRequest($"api/Course/{id}");
-            var result = await _client.ExecuteAsync<AutoWrapperResponse<CourseResponse>>(request);
+            var result = await _client.ExecuteAsync<CourseResponse>(request);
 
-            return result.Data?.Result;
+            return result.Data;
         }
 
         public async Task<RestResponse> UpdateCourse(CourseData course)
